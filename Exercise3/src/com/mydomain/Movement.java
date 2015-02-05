@@ -5,6 +5,7 @@ import lejos.nxt.Motor;
 import lejos.nxt.SensorPort;
 import lejos.nxt.TouchSensor;
 import lejos.nxt.UltrasonicSensor;
+import lejos.nxt.addon.OpticalDistanceSensor;
 import lejos.robotics.navigation.DifferentialPilot;
 
 /**
@@ -25,15 +26,22 @@ public class Movement
 	}
 	
 	/**
+	 * Set the speed of both motors at once
+	 * @param speed - How fast do you want to go?
+	 */
+	public void setSpeed(int speed)
+	{
+		Motor.A.setSpeed(speed);
+		Motor.B.setSpeed(speed);
+	}
+	
+	/**
 	 * Move the robot forward indefinitely.
 	 */
 	public void moveForward()
 	{
-		Motor.A.setSpeed(500);
-		Motor.B.setSpeed(500); 
-		
-			Motor.A.forward();
-			Motor.B.forward();
+		Motor.A.forward();
+		Motor.B.forward();
 	}
 	
 	/**
@@ -63,6 +71,24 @@ public class Movement
 	public void reverse(int distance)
 	{
 		pilot.travel(-distance);
+	}
+	
+	/**
+	 * Move the robot backwards indefinitely
+	 */
+	public void reverse()
+	{
+		Motor.A.backward();
+		Motor.B.backward();
+	}
+	
+	/**
+	 * Make the robot stop
+	 */
+	public void stop()
+	{
+		Motor.A.stop();
+		Motor.B.stop();
 	}
 	
 	/**
@@ -214,10 +240,17 @@ public class Movement
 				
     }	
 	
-	public void followPath()
+	/**
+	 * followPath is set up so that the robot can follow a black line on the floor.
+	 * To do this you need two light sensors, one for checking if there is black
+	 * on the left and right and then manoeuvring accordingly.
+	 * @param s1 - SensorPort for RIGHT light sensor 
+	 * @param s2 - SensorPort for LEFT light sensor 
+	 */
+	public void followPath(SensorPort s1, SensorPort s2)
 	{
-		LightSensor lsLeft = new LightSensor(SensorPort.S4);
-		LightSensor lsRight = new LightSensor(SensorPort.S1);
+		LightSensor lsLeft = new LightSensor(s2);
+		LightSensor lsRight = new LightSensor(s1);
 		
 		Movement move = new Movement();
 		Rotate rotate = new Rotate();
@@ -239,5 +272,16 @@ public class Movement
 			rotate.rotateRight(20);
 			//pilot.steer(-100);
 		}
+	}
+	
+	public void keepTheDistance(SensorPort s1, int distance)
+	{
+		OpticalDistanceSensor sensor = new OpticalDistanceSensor(s1);
+		
+		if(sensor.getRange() < distance+3)
+			reverse();
+		
+		if(sensor.getRange() > distance+3)//3cm from sensor to front of robot
+			moveForward();
 	}
 }

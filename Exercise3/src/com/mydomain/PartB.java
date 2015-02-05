@@ -1,5 +1,7 @@
 package com.mydomain;
 
+import lejos.nxt.SensorPort;
+
 
 public class PartB 
 {
@@ -12,7 +14,7 @@ public class PartB
 		while(true)
 		{
 			final Movement move = new Movement();
-			move.followPath();
+			move.followPath(SensorPort.S1,SensorPort.S4);
 		}
 	}
 	

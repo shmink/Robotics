@@ -5,7 +5,6 @@
 <fullyQualifiedTypeName name="java.awt.Button"/>
 <fullyQualifiedTypeName name="java.io.File"/>
 <fullyQualifiedTypeName name="com.mydomain.ButtonListener"/>
-<fullyQualifiedTypeName name="lejos.nxt.Button"/>
 <fullyQualifiedTypeName name="lejos.nxt.Sound"/>
 <fullyQualifiedTypeName name="lejos.nxt.comm.RConsole"/>
 <fullyQualifiedTypeName name="lejos.util.Delay"/>
@@ -13,7 +12,9 @@
 <fullyQualifiedTypeName name="com.mydomain.Rotate"/>
 <fullyQualifiedTypeName name="lejos.nxt.TouchSensor"/>
 <fullyQualifiedTypeName name="lejos.nxt.LightSensor"/>
-<fullyQualifiedTypeName name="lejos.nxt.SensorPort"/>
 <fullyQualifiedTypeName name="lejos.nxt.LCD"/>
 <fullyQualifiedTypeName name="lejos.nxt.I2CSensor"/>
+<fullyQualifiedTypeName name="lejos.nxt.Button"/>
+<fullyQualifiedTypeName name="lejos.nxt.addon.OpticalDistanceSensor"/>
+<fullyQualifiedTypeName name="lejos.nxt.SensorPort"/>
 </qualifiedTypeNameHistroy>

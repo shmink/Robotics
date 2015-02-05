@@ -7,10 +7,12 @@ import lejos.util.Delay;
 public class DontStopTheRock 
 {
 	static int A = 440;
+	static int Ab = 415;
 	static int B = 494;
 	static int C = 261;
 	static int G = 392;
 	static int E = 329;
+	static int F = 349;
 	static int wait = 500;
 
 	public static void main(String[] args) 
@@ -22,17 +24,17 @@ public class DontStopTheRock
 	public static void song()
 	{		
 		Delay.msDelay(wait);
-		Sound.playTone(A, 200);
+		Sound.playTone(F, 200);
 		Delay.msDelay(wait);
-		Sound.playTone(A, 200);
+		Sound.playTone(F, 200);
+		Delay.msDelay(300);
+		Sound.playTone(F, 200);
+		Delay.msDelay(300);
+		Sound.playTone(F, 200);
+		Delay.msDelay(300);
+		Sound.playTone(G, 200);
 		Delay.msDelay(wait);
-		Sound.playTone(A, 200);
-		Delay.msDelay(wait);
-		Sound.playTone(B, 200);
-		Delay.msDelay(wait);
-		Sound.playTone(C, 200);
-		Delay.msDelay(wait);
-		Sound.playTone(B, 200);
+		Sound.playTone(Ab, 200);
 		Delay.msDelay(wait);
 	}
 }
