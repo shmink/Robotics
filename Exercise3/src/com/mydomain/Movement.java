@@ -278,10 +278,18 @@ public class Movement
 	{
 		OpticalDistanceSensor sensor = new OpticalDistanceSensor(s1);
 		
-		if(sensor.getRange() < distance+3)
-			reverse();
-		
-		if(sensor.getRange() > distance+3)//3cm from sensor to front of robot
+		if(sensor.getRange() > distance && sensor.getRange() < distance+3)
+			stop();
+		else if(sensor.getRange() < distance+3)
+			reverse();		
+		else if(sensor.getRange() > distance+3)//3cm from sensor to front of robot
+		{
+		}
 			moveForward();
 	}
+	
+
+	
 }
+
+

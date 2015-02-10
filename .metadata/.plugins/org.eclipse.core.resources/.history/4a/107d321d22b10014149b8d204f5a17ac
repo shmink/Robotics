@@ -1,0 +1,30 @@
+import com.mydomain.Movement;
+
+import lejos.nxt.*;
+import lejos.robotics.subsumption.*;
+
+public class Junction implements Behavior{
+
+	private boolean  suppressed = false;
+	LightSensor lsLeft = new LightSensor(SensorPort.S1);
+	LightSensor lsRight = new LightSensor(SensorPort.S2);
+	
+	
+	@Override
+	public boolean takeControl() {
+		return lsLeft.getLightValue() <= 40 && lsRight.getLightValue() <= 40;
+	}
+
+	@Override
+	public void action() {
+		suppressed = false;
+		
+		
+	}
+
+	@Override
+	public void suppress() {
+		suppressed = true;
+	}
+
+}
