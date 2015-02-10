@@ -7,9 +7,7 @@
 <fullyQualifiedTypeName name="com.mydomain.ButtonListener"/>
 <fullyQualifiedTypeName name="lejos.nxt.Sound"/>
 <fullyQualifiedTypeName name="lejos.nxt.comm.RConsole"/>
-<fullyQualifiedTypeName name="lejos.util.Delay"/>
 <fullyQualifiedTypeName name="lejos.nxt.UltrasonicSensor"/>
-<fullyQualifiedTypeName name="com.mydomain.Rotate"/>
 <fullyQualifiedTypeName name="lejos.nxt.TouchSensor"/>
 <fullyQualifiedTypeName name="lejos.nxt.LightSensor"/>
 <fullyQualifiedTypeName name="lejos.nxt.LCD"/>
@@ -17,4 +15,9 @@
 <fullyQualifiedTypeName name="lejos.nxt.Button"/>
 <fullyQualifiedTypeName name="lejos.nxt.addon.OpticalDistanceSensor"/>
 <fullyQualifiedTypeName name="lejos.nxt.SensorPort"/>
+<fullyQualifiedTypeName name="lejos.util.Delay"/>
+<fullyQualifiedTypeName name="com.mydomain.Movement"/>
+<fullyQualifiedTypeName name="com.mydomain.Rotate"/>
+<fullyQualifiedTypeName name="java.util.ArrayList"/>
+<fullyQualifiedTypeName name="java.util.Arrays"/>
 </qualifiedTypeNameHistroy>

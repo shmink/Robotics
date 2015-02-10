@@ -15,7 +15,7 @@ public class Rotate
 	
 	public Rotate()
 	{
-		  pilot = new DifferentialPilot(2.6f, 8.2f, Motor.A, Motor.B, false);
+		  pilot = new DifferentialPilot(2.6f, 5.2f, Motor.A, Motor.B, false);
 	}
 	
 	/**

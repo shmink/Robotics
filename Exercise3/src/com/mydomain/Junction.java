@@ -1,14 +1,21 @@
 package com.mydomain;
+import java.util.ArrayList;
+
 import lejos.nxt.*;
 import lejos.robotics.subsumption.*;
 
 public class Junction implements Behavior{
 
 	private boolean  suppressed = false;
+	ArrayList<Direction> path;
 	Rotate r = new Rotate();
 	Movement m = new Movement();
 	LightSensor lsLeft = new LightSensor(SensorPort.S4);
 	LightSensor lsRight = new LightSensor(SensorPort.S1);
+	
+	public Junction(ArrayList<Direction> path){
+		this.path = path;
+	}
 	
 	public String test()
 	{
@@ -27,7 +34,7 @@ public class Junction implements Behavior{
 	@Override
 	public void action() {
 		suppressed = false;
-		r.rotateLeft(90);
+		this.decidePath();
 		while(Motor.A.isMoving() && Motor.B.isMoving())
 			Thread.yield();
 		m.stop();
@@ -36,6 +43,29 @@ public class Junction implements Behavior{
 	@Override
 	public void suppress() {
 		suppressed = true;
+	}
+
+	public void decidePath(){
+		m.moveForward2(3);
+		if(path.get(0) == Direction.LEFT){
+			r.rotateLeft(90);
+			LCD.drawString("left", 0, 0);
+		}
+		 if (path.get(0) == Direction.RIGHT){
+			r.rotateRight(90);
+			LCD.drawString("right", 0, 0);
+		}
+		 if (path.get(0) == Direction.FORWARD){
+			m.moveForward(50); 
+			LCD.drawString("forward", 0, 0);
+		}
+		 if (path.get(0) == Direction.BACKWARD){
+			m.reverse();
+			LCD.drawString("backward", 0, 0);
+		}
+		
+		if(!path.isEmpty())
+			 path.remove(0);
 	}
 
 }

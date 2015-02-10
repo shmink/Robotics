@@ -1,5 +1,7 @@
 package com.mydomain;
 
+import java.util.ArrayList;
+
 import lejos.nxt.LightSensor;
 import lejos.nxt.Motor;
 import lejos.nxt.SensorPort;
@@ -38,8 +40,10 @@ public class Movement
 	/**
 	 * Move the robot forward indefinitely.
 	 */
-	public void moveForward()
+	public void moveForward(int speed)
 	{
+		Motor.A.setSpeed(speed);
+		Motor.B.setSpeed(speed);
 		Motor.A.forward();
 		Motor.B.forward();
 	}
@@ -48,7 +52,7 @@ public class Movement
 	 * Move the robot forward a fixed distance.
 	 * @param distance - How far do you want the robot to travel?
 	 */
-	public void moveForward(int distance){
+	public void moveForward2(int distance){
 		pilot.travel(distance);
 	}
 	
@@ -62,6 +66,13 @@ public class Movement
 	{
 		Motor.A.setSpeed(300);
 		Motor.B.setSpeed(500);
+	}
+	
+	public ArrayList<Direction> createPath(Direction[] orders ,ArrayList<Direction> arrayList){
+		for(Direction d : orders){
+			arrayList.add(d);
+		}
+		return arrayList;
 	}
 	
 	/**
@@ -104,7 +115,7 @@ public class Movement
 		
 		while(! (touch1.isPressed() || touch2.isPressed()))
 		{
-			moveForward();
+			moveForward(250);
 		}
 		
 		this.reverse(3);		
@@ -135,7 +146,7 @@ public class Movement
 		
 		while(!crashed)
 		{
-			this.moveForward();
+			this.moveForward(250);
 			if(touch2.isPressed() || touch3.isPressed())
 			{
 				crashed = true;
@@ -201,7 +212,7 @@ public class Movement
 			
 			if(ultra.getDistance() < tooFar && ultra.getDistance() > tooClose)
 			{
-				moveForward();
+				moveForward(250);
 			}
 			//moveSlightlyLeft
 		    if(ultra.getDistance() <= tooClose)
@@ -258,7 +269,7 @@ public class Movement
 		if(lsLeft.getLightValue() >= 45 && lsRight.getLightValue() >= 45)
 		{
 			System.out.println("Moving forward");
-			move.moveForward();
+			move.moveForward(250);
 		}
 		
 		if(lsLeft.getLightValue() <= 40)
@@ -285,7 +296,7 @@ public class Movement
 		else if(sensor.getRange() > distance+3)//3cm from sensor to front of robot
 		{
 		}
-			moveForward();
+			moveForward(250);
 	}
 	
 

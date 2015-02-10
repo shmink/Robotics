@@ -16,7 +16,7 @@ public class Feedback {
 		final double P = 0.1;
 	
 		while(distanceSensor.getRange()>setPoint){
-			m.moveForward();
+			m.moveForward(250);
 			double measuredValue = distanceSensor.getRange();
 			double error = setPoint - measuredValue;
 			outputSpeed += (P*error);
