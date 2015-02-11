@@ -1,0 +1,299 @@
+package com.mydomain;
+
+import java.util.ArrayList;
+
+import lejos.nxt.LightSensor;
+import lejos.nxt.Motor;
+import lejos.nxt.SensorPort;
+import lejos.nxt.TouchSensor;
+import lejos.nxt.UltrasonicSensor;
+import lejos.nxt.addon.OpticalDistanceSensor;
+import lejos.robotics.navigation.DifferentialPilot;
+
+/**
+ * Class for the majority of movement methods the robot will use.
+ *
+ */
+public class Movement 
+{
+
+	private DifferentialPilot pilot;
+	private int power,speed;
+
+	/**
+	 * Construct a Movement object and initialise DifferentialPilot object
+	 */
+	public Movement(int power, int speed)
+	{
+		  pilot = new DifferentialPilot(2.6f, 8.2f, Motor.A, Motor.B, false);
+		  this.power = power;
+		  this.speed = speed;
+		  Motor.A.setSpeed(speed);
+		  Motor.B.setSpeed(speed);
+	}
+
+	/**
+	 * Move the robot forward indefinitely.
+	 */
+	public void moveForward()
+	{
+		Motor.A.forward();
+		Motor.B.forward();
+	}
+	
+	/**
+	 * Move the robot forward a fixed distance.
+	 * @param distance - How far do you want the robot to travel?
+	 */
+	public void moveForward2(int distance){
+		pilot.travel(distance);
+	}
+	
+	public void moveLeft()
+	{
+		Motor.A.setSpeed(speed);
+		Motor.B.setSpeed((int)(0.6*speed));                   
+	}
+	
+	public void moveRight()
+	{
+		Motor.A.setSpeed((int)(0.6*speed));
+		Motor.B.setSpeed(speed);
+	}
+	
+	public ArrayList<Direction> createPath(Direction[] orders ,ArrayList<Direction> arrayList){
+		for(Direction d : orders){
+			arrayList.add(d);
+		}
+		return arrayList;
+	}
+	
+	/**
+	 * Moves the robot backwards a specific distance
+	 * @param distance - How far do you want to reverse?
+	 */
+	public void reverse(int distance)
+	{
+		pilot.travel(-distance);
+	}
+	
+	/**
+	 * Move the robot backwards indefinitely
+	 */
+	public void reverse()
+	{
+		Motor.A.backward();
+		Motor.B.backward();
+	}
+	
+	/**
+	 * Make the robot stop
+	 */
+	public void stop()
+	{
+		Motor.A.stop();
+		Motor.B.stop();
+	}
+	
+	/**
+	 * moveUntilCrashed makes the robot move forwards until
+	 * one of the touch sensors has been pushed then it'll reverse a little
+	 * @param s1 - Touch sensor #1
+	 * @param s2 - Touch sensor #2
+	 */
+	public void moveUntilCrash(SensorPort s1, SensorPort s2)
+	{
+		TouchSensor touch1 = new TouchSensor(s1);
+		TouchSensor touch2 = new TouchSensor(s2);
+		
+		while(! (touch1.isPressed() || touch2.isPressed()))
+		{
+			moveForward();
+		}
+		
+		this.reverse(3);		
+	}
+	
+	/**
+	 * reverses and rotates the robot a specified distance and angle
+	 * @param reverseDistance - the distance to reverse
+	 * @param rotateAngle - the angle to rotate
+	 */
+	public void turnAwayFromObject(int reverseDistance, int rotateAngle)
+	{ 
+		this.pilot.travel(-reverseDistance);
+		this.pilot.rotate(rotateAngle);
+	}
+	
+	/**
+	 * Takes the two sensors and responds to touches/crashes by turning and driving in a different direction
+	 * @param s1 - the port of the first sensor 
+	 * @param s2 - the port of the second sensor
+	 */
+	public void avoidObjects(SensorPort s1, SensorPort s2)
+	{	
+		TouchSensor touch2 = new TouchSensor(s1);
+		TouchSensor touch3 = new TouchSensor(s2);
+		
+		boolean crashed = false;		
+		
+		while(!crashed)
+		{
+			this.moveForward();
+			if(touch2.isPressed() || touch3.isPressed())
+			{
+				crashed = true;
+			}
+		}
+		
+		
+		if(crashed)
+		{
+			turnAwayFromObject(5,180); 
+    		crashed = false;    		
+    		avoidObjects(s1,s2);
+		}
+	}
+	
+	/**
+	 * Makes the robot move in a zig zag pattern
+	 * @param angle - the angle to turn
+	 * @param distance - the distance to travel
+	*/
+	public void zigzag(int angle, int distance)
+    {    	
+    	this.pilot.rotate(angle);
+    	this.pilot.travel(distance);
+		this.pilot.rotate(-angle);
+		this.pilot.travel(distance);
+    }
+	
+	
+	/**
+	 * The robot should be able to escape a maze using a wall
+	 * hugging technique where it follows the right hand wall
+	 * @param s1 - UltrasonicSensor port
+	 * @param s2 - TouchSensor port #1
+	 * @param s3 - TouchSensor port #2
+	 * @param foundWall - This SHOULD be set to false initially
+	 */
+	public void escapeMaze(SensorPort s1, SensorPort s2, SensorPort s3, boolean foundWall)
+	{
+		UltrasonicSensor ultra = new UltrasonicSensor(s1);
+		TouchSensor touch1 = new TouchSensor(s2);
+		TouchSensor touch2 = new TouchSensor(s3);
+		Rotate rotate = new Rotate();
+		//Ranges
+		int tooClose = 5;
+		int tooFar = 10;			
+		
+		//findWall
+		if(!foundWall)
+		{
+			moveUntilCrash(s2,s3);
+			rotate.rotateLeft(90);
+			escapeMaze(s1,s2,s3,true);
+		}
+		
+		while(foundWall)
+		{
+			if(touch1.isPressed() || touch2.isPressed())
+			{
+				reverse(3);
+				rotate.rotateLeft(90);
+			}
+			
+			if(ultra.getDistance() < tooFar && ultra.getDistance() > tooClose)
+			{
+				moveForward();
+			}
+			//moveSlightlyLeft
+		    if(ultra.getDistance() <= tooClose)
+			{
+				DifferentialPilot pilot2 = new DifferentialPilot(2.6f, 8.2f, Motor.B, Motor.A);
+				pilot2.travelArc(50, 5);
+			}
+			//moveSlightlyRight
+		    if(ultra.getDistance() > tooFar)
+			{
+				DifferentialPilot pilot = new DifferentialPilot(2.6f, 8.2f, Motor.A, Motor.B);
+				pilot.travelArc(50, 5);
+			}
+			//If wall disappears from vision/wall stopped.
+			if(ultra.getDistance() > 30)
+			{
+				rotate.rotateRight(90);
+				moveForward();
+			}
+		}
+	}
+
+	/**
+	 * Move the robot in a circle pattern.
+	 * @param radius - What's the radius of the circle you want?
+	 * @param distance - How far should robot travel?
+	 */
+	public void circle(int radius, int distance)
+    {
+    	DifferentialPilot pilotRight = new DifferentialPilot(2.6f, 8.2f, Motor.A, Motor.B, false);
+		DifferentialPilot pilotLeft = new DifferentialPilot(2.6f, 8.2f, Motor.B, Motor.A, false);
+
+    			pilotRight.travelArc(radius, distance);
+    			pilotRight.rotate(180);
+    			pilotLeft.travelArc(radius, distance);
+				
+    }	
+	
+	/**
+	 * followPath is set up so that the robot can follow a black line on the floor.
+	 * To do this you need two light sensors, one for checking if there is black
+	 * on the left and right and then manoeuvring accordingly.
+	 * @param s1 - SensorPort for RIGHT light sensor 
+	 * @param s2 - SensorPort for LEFT light sensor 
+	 */
+	public void followPath(SensorPort s1, SensorPort s2)
+	{
+		LightSensor lsLeft = new LightSensor(s2);
+		LightSensor lsRight = new LightSensor(s1);
+		
+		
+		Rotate rotate = new Rotate();
+		
+		if(lsLeft.getLightValue() >= 45 && lsRight.getLightValue() >= 45)
+		{
+			System.out.println("Moving forward");
+			this.moveForward();
+		}
+		
+		if(lsLeft.getLightValue() <= 40)
+		{
+			rotate.rotateLeft(20);
+			//pilot.steer(100);
+		}
+		
+		if(lsRight.getLightValue() <= 40)
+		{
+			rotate.rotateRight(20);
+			//pilot.steer(-100);
+		}
+	}
+	
+	public void keepTheDistance(SensorPort s1, int distance)
+	{
+		OpticalDistanceSensor sensor = new OpticalDistanceSensor(s1);
+		
+		if(sensor.getRange() > distance && sensor.getRange() < distance+3)
+			stop();
+		else if(sensor.getRange() < distance+3)
+			reverse();		
+		else if(sensor.getRange() > distance+3)//3cm from sensor to front of robot
+		{
+		}
+			moveForward(250);
+	}
+	
+
+	
+}
+
+

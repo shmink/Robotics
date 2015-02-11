@@ -21,25 +21,28 @@ public class PartA
 
 	private static void run() 
 	{
-		Movement move = new Movement();
-		move.setSpeed(300);
+		Movement move = new Movement(100,800);
 
-		ArrayList<Direction> path = new ArrayList<Direction>();
-		path.add(Direction.RIGHT);
-		path.add(Direction.LEFT);
-		path.add(Direction.RIGHT);
-		path.add(Direction.LEFT);
-		path.add(Direction.RIGHT);
-		path.add(Direction.LEFT);
-		path.add(Direction.RIGHT);
-		path.add(Direction.LEFT);
-		
-		Behavior b1 = new DriveForward();
-		Behavior b2 = new Junction(path);
-		Behavior[] bArray = {b1,b2};
-		Arbitrator arby = new Arbitrator(bArray);
-		arby.start();
+//		ArrayList<Direction> path = new ArrayList<Direction>();
+//		path.add(Direction.RIGHT);
+//		path.add(Direction.LEFT);
+//		path.add(Direction.RIGHT);
+//		path.add(Direction.LEFT);
+//		path.add(Direction.RIGHT);
+//		path.add(Direction.LEFT);
+//		path.add(Direction.RIGHT);
+//		path.add(Direction.LEFT);
+//		
+//		Behavior b1 = new DriveForward();
+//		//Behavior b2 = new Junction(path);
+//		Behavior b3 = new keepOnPath();
+//		Behavior[] bArray = {b1,b3};
+//		Arbitrator arby = new Arbitrator(bArray);
+//		arby.start();
 
+		while(true){
+			move.keepTheDistance(SensorPort.S2, 15);
+		}
 //		while(true)
 //		{
 //			Junction b = new Junction();

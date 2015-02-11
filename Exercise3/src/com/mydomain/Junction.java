@@ -9,7 +9,7 @@ public class Junction implements Behavior{
 	private boolean  suppressed = false;
 	ArrayList<Direction> path;
 	Rotate r = new Rotate();
-	Movement m = new Movement();
+	Movement m = new Movement(100,800);
 	LightSensor lsLeft = new LightSensor(SensorPort.S4);
 	LightSensor lsRight = new LightSensor(SensorPort.S1);
 	
@@ -46,7 +46,7 @@ public class Junction implements Behavior{
 	}
 
 	public void decidePath(){
-		m.moveForward2(3);
+		m.travelForward(3);
 		if(path.get(0) == Direction.LEFT){
 			r.rotateLeft(90);
 			LCD.drawString("left", 0, 0);
@@ -56,7 +56,7 @@ public class Junction implements Behavior{
 			LCD.drawString("right", 0, 0);
 		}
 		 if (path.get(0) == Direction.FORWARD){
-			m.moveForward(50); 
+			m.moveForward(); 
 			LCD.drawString("forward", 0, 0);
 		}
 		 if (path.get(0) == Direction.BACKWARD){

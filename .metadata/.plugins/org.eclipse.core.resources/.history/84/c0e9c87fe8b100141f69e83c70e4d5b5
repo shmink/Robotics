@@ -1,0 +1,33 @@
+package com.mydomain;
+
+import lejos.nxt.LightSensor;
+import lejos.nxt.SensorPort;
+import lejos.robotics.subsumption.Behavior;
+
+public class keepOnPath implements Behavior {
+
+	LightSensor lsLeft = new LightSensor(SensorPort.S4);
+	LightSensor lsRight = new LightSensor(SensorPort.S1);
+	private boolean  suppressed = false;
+
+	@Override
+	public boolean takeControl() {
+		return XOR(lsLeft.getLightValue() <= 40, lsRight.getLightValue() <= 40);
+	}
+
+	@Override
+	public void action() {
+		suppressed = false;
+		
+	}
+
+	@Override
+	public void suppress() {
+		suppressed=true;
+	}
+	
+	public boolean XOR(boolean x, boolean y){
+		return ((x||y) && (!(x&&y)));
+	}
+
+}

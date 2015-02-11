@@ -18,54 +18,64 @@ public class Movement
 {
 
 	private DifferentialPilot pilot;
+	private int power,speed;
 
 	/**
 	 * Construct a Movement object and initialise DifferentialPilot object
 	 */
-	public Movement()
+	public Movement(int power, int speed)
 	{
 		  pilot = new DifferentialPilot(2.6f, 8.2f, Motor.A, Motor.B, false);
+		  this.power = power;
+		  this.speed = speed;
+		  Motor.A.setSpeed(speed);
+		  Motor.B.setSpeed(speed);
 	}
-	
-	/**
-	 * Set the speed of both motors at once
-	 * @param speed - How fast do you want to go?
-	 */
-	public void setSpeed(int speed)
-	{
-		Motor.A.setSpeed(speed);
-		Motor.B.setSpeed(speed);
-	}
-	
+
 	/**
 	 * Move the robot forward indefinitely.
 	 */
-	public void moveForward(int speed)
+	public void moveForward()
 	{
-		Motor.A.setSpeed(speed);
-		Motor.B.setSpeed(speed);
+		Motor.A.setSpeed(this.speed);
+		Motor.B.setSpeed(this.speed);
 		Motor.A.forward();
 		Motor.B.forward();
+		System.out.println("moving forward");
+	}
+	
+	/*
+	 * Set a custom speed
+	 */
+	public void moveForward(int speed)
+	{
+		Motor.A.setSpeed(this.speed);
+		Motor.B.setSpeed(this.speed);
+		Motor.A.forward();
+		Motor.B.forward();
+		System.out.println("moving forward");
 	}
 	
 	/**
 	 * Move the robot forward a fixed distance.
 	 * @param distance - How far do you want the robot to travel?
 	 */
-	public void moveForward2(int distance){
+	public void travelForward(int distance){
 		pilot.travel(distance);
 	}
 	
 	public void moveLeft()
 	{
-		Motor.A.setSpeed(500);
-		Motor.B.setSpeed(300);                   
+		Motor.A.setSpeed(speed*2);
+		Motor.B.setSpeed(speed/4);
+		System.out.println("moving left");
 	}
 	
 	public void moveRight()
 	{
-		Motor.A.setSpeed(300);
-		Motor.B.setSpeed(500);
+		Motor.A.setSpeed(speed/4);
+		Motor.B.setSpeed(speed*2);
+		System.out.println("moving right");
 	}
 	
 	public ArrayList<Direction> createPath(Direction[] orders ,ArrayList<Direction> arrayList){
@@ -115,7 +125,7 @@ public class Movement
 		
 		while(! (touch1.isPressed() || touch2.isPressed()))
 		{
-			moveForward(250);
+			moveForward();
 		}
 		
 		this.reverse(3);		
@@ -146,7 +156,7 @@ public class Movement
 		
 		while(!crashed)
 		{
-			this.moveForward(250);
+			this.moveForward();
 			if(touch2.isPressed() || touch3.isPressed())
 			{
 				crashed = true;
@@ -212,7 +222,7 @@ public class Movement
 			
 			if(ultra.getDistance() < tooFar && ultra.getDistance() > tooClose)
 			{
-				moveForward(250);
+				moveForward();
 			}
 			//moveSlightlyLeft
 		    if(ultra.getDistance() <= tooClose)
@@ -230,7 +240,7 @@ public class Movement
 			if(ultra.getDistance() > 30)
 			{
 				rotate.rotateRight(90);
-				moveForward(12);
+				moveForward();
 			}
 		}
 	}
@@ -263,13 +273,13 @@ public class Movement
 		LightSensor lsLeft = new LightSensor(s2);
 		LightSensor lsRight = new LightSensor(s1);
 		
-		Movement move = new Movement();
+		
 		Rotate rotate = new Rotate();
 		
 		if(lsLeft.getLightValue() >= 45 && lsRight.getLightValue() >= 45)
 		{
 			System.out.println("Moving forward");
-			move.moveForward(250);
+			this.moveForward();
 		}
 		
 		if(lsLeft.getLightValue() <= 40)
@@ -289,14 +299,17 @@ public class Movement
 	{
 		OpticalDistanceSensor sensor = new OpticalDistanceSensor(s1);
 		
+		//The distance is within the range of the distance to the distance +3, stop
 		if(sensor.getRange() > distance && sensor.getRange() < distance+3)
 			stop();
+		//Else, reverse if it gets too close
 		else if(sensor.getRange() < distance+3)
-			reverse();		
+			reverse();	
+		//If the robot is greater than the distance, accellerate towards the target
 		else if(sensor.getRange() > distance+3)//3cm from sensor to front of robot
 		{
+			this.moveForward((int)(speed*sensor.getRange()));
 		}
-			moveForward(250);
 	}
 	
 

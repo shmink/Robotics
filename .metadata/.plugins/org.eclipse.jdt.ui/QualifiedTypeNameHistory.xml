@@ -20,4 +20,5 @@
 <fullyQualifiedTypeName name="com.mydomain.Rotate"/>
 <fullyQualifiedTypeName name="java.util.ArrayList"/>
 <fullyQualifiedTypeName name="java.util.Arrays"/>
+<fullyQualifiedTypeName name="lejos.robotics.subsumption.Behavior"/>
 </qualifiedTypeNameHistroy>
