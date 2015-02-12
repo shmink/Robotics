@@ -13,12 +13,12 @@
 <fullyQualifiedTypeName name="lejos.nxt.LCD"/>
 <fullyQualifiedTypeName name="lejos.nxt.I2CSensor"/>
 <fullyQualifiedTypeName name="lejos.nxt.Button"/>
-<fullyQualifiedTypeName name="lejos.nxt.addon.OpticalDistanceSensor"/>
 <fullyQualifiedTypeName name="lejos.nxt.SensorPort"/>
 <fullyQualifiedTypeName name="lejos.util.Delay"/>
 <fullyQualifiedTypeName name="com.mydomain.Movement"/>
 <fullyQualifiedTypeName name="com.mydomain.Rotate"/>
 <fullyQualifiedTypeName name="java.util.ArrayList"/>
 <fullyQualifiedTypeName name="java.util.Arrays"/>
+<fullyQualifiedTypeName name="lejos.nxt.addon.OpticalDistanceSensor"/>
 <fullyQualifiedTypeName name="lejos.robotics.subsumption.Behavior"/>
 </qualifiedTypeNameHistroy>
