@@ -16,7 +16,7 @@ public class TooClose implements Behavior {
 	
 	@Override
 	public boolean takeControl() {
-		return sensor.getDistance() < targetDistance;
+		return sensor.getDistance() < (targetDistance-(targetDistance/10));
 	}
 
 	@Override

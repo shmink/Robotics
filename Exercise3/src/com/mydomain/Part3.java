@@ -11,11 +11,7 @@ public class PartB
 	}
 	
 	public static void run(){
-		while(true)
-		{
-			final Movement move = new Movement(100, 800);
-			move.followPath(SensorPort.S1,SensorPort.S4);
-		}
+
 	}
 	
 }

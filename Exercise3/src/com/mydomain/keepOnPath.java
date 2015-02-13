@@ -1,5 +1,4 @@
 package com.mydomain;
-
 import lejos.nxt.LightSensor;
 import lejos.nxt.Motor;
 import lejos.nxt.SensorPort;

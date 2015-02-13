@@ -17,7 +17,7 @@ public class Stay implements Behavior{
 	
 	@Override
 	public boolean takeControl() {
-		return sensor.getDistance() <= (targetDistance+(targetDistance/10)) && sensor.getDistance() > targetDistance+3;
+		return true;
 	}
 
 	@Override

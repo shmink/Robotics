@@ -6,6 +6,7 @@ public class DriveForward implements Behavior {
 
 	Movement m = new Movement(100,400);
 	private boolean suppressed = false;
+
 	
 	@Override
 	public boolean takeControl() {

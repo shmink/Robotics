@@ -24,7 +24,7 @@ public class KeepUp implements Behavior {
 	@Override
 	public void action() {
 		suppressed = false;
-		m.moveForward(400);
+		m.moveForward(sensor.getDistance());
 		System.out.println("moving forward");
 	}
 
