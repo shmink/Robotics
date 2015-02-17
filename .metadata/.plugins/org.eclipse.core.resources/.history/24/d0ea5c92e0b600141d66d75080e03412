@@ -25,7 +25,7 @@ public class Movement
 	 */
 	public Movement(int power, int speed)
 	{
-		  pilot = new DifferentialPilot(2.6f, 5.2f, Motor.A, Motor.B, false);//was 2.6f and 12.3f
+		  pilot = new DifferentialPilot(2.6f, /*8.2*/12.3f, Motor.A, Motor.B, false);
 		  this.power = power;
 		  this.speed = speed;
 		  Motor.A.setSpeed(speed);

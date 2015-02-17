@@ -1,4 +1,6 @@
 package com.mydomain;
+import java.util.ArrayList;
+import lejos.robotics.subsumption.*;
 import lejos.nxt.Button;
 import lejos.nxt.LightSensor;
 import lejos.nxt.SensorPort;
@@ -12,11 +14,10 @@ public class Part2
 		LightSensor lsRight = new LightSensor(SensorPort.S1);		
 		lsLeft.getLightValue(); lsLeft.getLightValue();
 		Button.waitForAnyPress();
-		//run();
-		grid();
+		run();
 	}
 
-	/*private static void run() 
+	private static void run() 
 	{
 
 		ArrayList<Direction> path = new ArrayList<Direction>();
@@ -43,12 +44,6 @@ public class Part2
 		Arbitrator arby = new Arbitrator(bArray);
 		arby.start();
 		
-	}*/
-	
-	private static void grid()
-	{
-		GridPath grid = new GridPath(0,0,3,4);
-		grid.heading();
 	}
 	
 	

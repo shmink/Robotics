@@ -1,4 +1,6 @@
 package com.mydomain;
+import java.util.ArrayList;
+import lejos.robotics.subsumption.*;
 import lejos.nxt.Button;
 import lejos.nxt.LightSensor;
 import lejos.nxt.SensorPort;
