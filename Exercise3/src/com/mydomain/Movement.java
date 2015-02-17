@@ -25,7 +25,7 @@ public class Movement
 	 */
 	public Movement(int power, int speed)
 	{
-		  pilot = new DifferentialPilot(2.6f, 8.2f, Motor.A, Motor.B, false);
+		  pilot = new DifferentialPilot(2.6f, /*8.2*/12.3f, Motor.A, Motor.B, false);
 		  this.power = power;
 		  this.speed = speed;
 		  Motor.A.setSpeed(speed);
@@ -37,8 +37,6 @@ public class Movement
 	 */
 	public void moveForward()
 	{
-		Motor.A.setSpeed(this.speed);
-		Motor.B.setSpeed(this.speed);
 		Motor.A.forward();
 		Motor.B.forward();
 		System.out.println("moving forward");
@@ -49,8 +47,8 @@ public class Movement
 	 */
 	public void moveForward(int speed)
 	{
-		Motor.A.setSpeed(this.speed);
-		Motor.B.setSpeed(this.speed);
+		Motor.A.setSpeed(speed);
+		Motor.B.setSpeed(speed);
 		Motor.A.forward();
 		Motor.B.forward();
 		System.out.println("moving forward");
@@ -67,13 +65,13 @@ public class Movement
 	public void moveLeft()
 	{
 		Motor.A.setSpeed(speed*2);
-		Motor.B.setSpeed(speed/4);
+		Motor.B.setSpeed(speed);
 		System.out.println("moving left");
 	}
 	
 	public void moveRight()
 	{
-		Motor.A.setSpeed(speed/4);
+		Motor.A.setSpeed(speed);
 		Motor.B.setSpeed(speed*2);
 		System.out.println("moving right");
 	}
@@ -97,8 +95,10 @@ public class Movement
 	/**
 	 * Move the robot backwards indefinitely
 	 */
-	public void reverse()
+	public void reverseWithSpeed(int speed)
 	{
+		Motor.A.setSpeed(speed);
+		Motor.B.setSpeed(speed);
 		Motor.A.backward();
 		Motor.B.backward();
 	}
@@ -108,8 +108,7 @@ public class Movement
 	 */
 	public void stop()
 	{
-		Motor.A.stop();
-		Motor.B.stop();
+		pilot.stop();	
 	}
 	
 	/**
@@ -295,22 +294,22 @@ public class Movement
 		}
 	}
 	
-	public void keepTheDistance(SensorPort s1, int distance)
-	{
-		OpticalDistanceSensor sensor = new OpticalDistanceSensor(s1);
-		
-		//The distance is within the range of the distance to the distance +3, stop
-		if(sensor.getRange() > distance && sensor.getRange() < distance+3)
-			stop();
-		//Else, reverse if it gets too close
-		else if(sensor.getRange() < distance+3)
-			reverse();	
-		//If the robot is greater than the distance, accellerate towards the target
-		else if(sensor.getRange() > distance+3)//3cm from sensor to front of robot
-		{
-			this.moveForward((int)(speed*sensor.getRange()));
-		}
-	}
+//	public void keepTheDistance(SensorPort s1, int distance)
+//	{
+//		OpticalDistanceSensor sensor = new OpticalDistanceSensor(s1);
+//		
+//		//The distance is within the range of the distance to the distance +3, stop
+//		if(sensor.getRange() > distance && sensor.getRange() < distance+3)
+//			stop();
+//		//Else, reverse if it gets too close
+//		else if(sensor.getRange() < distance+3)
+//			reverse();	
+//		//If the robot is greater than the distance, accellerate towards the target
+//		else if(sensor.getRange() > distance+3)//3cm from sensor to front of robot
+//		{
+//			this.moveForward((int)(speed*sensor.getRange()));
+//		}
+//	}
 	
 
 	

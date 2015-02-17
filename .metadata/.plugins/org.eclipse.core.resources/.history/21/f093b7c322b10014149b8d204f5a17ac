@@ -1,7 +1,0 @@
-package com.mydomain;
-
-public class PID
-{
-	//accelerate depending on the distance of the robot
-	
-}

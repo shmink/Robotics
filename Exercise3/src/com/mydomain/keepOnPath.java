@@ -6,7 +6,7 @@ import lejos.robotics.subsumption.Behavior;
 
 public class keepOnPath implements Behavior {
 
-	Movement m = new Movement(100,400);
+	Movement m = new Movement(100,200);
 	Rotate r = new Rotate();
 	LightSensor lsLeft = new LightSensor(SensorPort.S4);
 	LightSensor lsRight = new LightSensor(SensorPort.S1);
@@ -20,19 +20,20 @@ public class keepOnPath implements Behavior {
 	@Override
 	public void action() {
 		suppressed = false;
-		while(XOR(lsLeft.getLightValue() <= 40, lsRight.getLightValue() <= 40)){
+		System.out.println("turning to path");
+			if(XOR(lsLeft.getLightValue() <= 40, lsRight.getLightValue() <= 40)){
+			}
 			if(lsLeft.getLightValue() <= 40){
 				m.moveLeft();
 			}
 			else if(lsRight.getLightValue() <= 40){
 				m.moveRight();
 			}
-		}	
 	}
 
 	@Override
 	public void suppress() {
-		suppressed=true;
+		this.suppressed=true;
 	}
 	
 	public boolean XOR(boolean x, boolean y){

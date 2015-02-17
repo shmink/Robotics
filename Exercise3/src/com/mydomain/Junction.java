@@ -60,7 +60,7 @@ public class Junction implements Behavior{
 			LCD.drawString("forward", 0, 0);
 		}
 		 if (path.get(0) == Direction.BACKWARD){
-			m.reverse();
+			m.reverseWithSpeed(400);
 			LCD.drawString("backward", 0, 0);
 		}
 		

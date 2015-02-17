@@ -3,7 +3,7 @@ package com.mydomain;
 import lejos.nxt.SensorPort;
 
 
-public class PartB 
+public class Part3 
 {
 	public static void main(String[] args)
 	{

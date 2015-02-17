@@ -1,0 +1,39 @@
+package com.mydomain;
+
+import lejos.nxt.Motor;
+import lejos.nxt.SensorPort;
+import lejos.nxt.addon.OpticalDistanceSensor;
+import lejos.robotics.subsumption.Behavior;
+
+public class KeepUp implements Behavior {
+
+	private int targetDistance;
+	private boolean suppressed = false;
+	Movement m = new Movement(100,400);
+	OpticalDistanceSensor sensor = new OpticalDistanceSensor(SensorPort.S2);
+	
+	public KeepUp(int distance){
+		this.targetDistance = distance;
+	}
+	
+	@Override
+	public boolean takeControl() {
+		System.out.println("keeping up");
+		return sensor.getDistance() > (targetDistance+(targetDistance/10));
+	}
+
+	@Override
+	public void action() {
+		suppressed = false;
+		m.moveForward(200);
+		System.out.println("moving forward");
+		while(!suppressed)
+			Thread.yield();
+	}
+
+	@Override
+	public void suppress() {
+		this.suppressed = true;
+	}
+
+}

@@ -16,16 +16,20 @@ public class TooClose implements Behavior {
 	
 	@Override
 	public boolean takeControl() {
-		return sensor.getDistance() < (targetDistance-(targetDistance/10));
+		return sensor.getDistance() < targetDistance;
 	}
 
 	@Override
 	public void action() {
 		suppressed = false;
-		Motor.A.setSpeed(sensor.getDistance());
-		Motor.B.setSpeed(sensor.getDistance());
-		m.reverse();
-		System.out.println("reversing");
+		while(suppressed == false){
+			System.out.println("reversing");
+			double difference = sensor.getDistance() - targetDistance;
+			double newSpeed = 5*difference;
+			m.reverseWithSpeed((int) newSpeed);
+			if(sensor.getDistance() == 300)
+				suppressed = true;
+		}
 	}
 
 	@Override

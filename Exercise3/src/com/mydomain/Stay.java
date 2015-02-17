@@ -17,17 +17,18 @@ public class Stay implements Behavior{
 	
 	@Override
 	public boolean takeControl() {
-		return true;
+		return sensor.getDistance() <= (targetDistance+(targetDistance/10)) && sensor.getDistance() > targetDistance+3;
 	}
 
 	@Override
 	public void action() {
+		System.out.println("Stay");
 		m.stop();
 	}
 
 	@Override
 	public void suppress() {
-		suppressed = true;
+		this.suppressed = true;
 	}
 
 }
