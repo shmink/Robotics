@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <qualifiedTypeNameHistroy>
 <fullyQualifiedTypeName name="lejos.robotics.navigation.DifferentialPilot"/>
-<fullyQualifiedTypeName name="lejos.nxt.Motor"/>
 <fullyQualifiedTypeName name="java.awt.Button"/>
 <fullyQualifiedTypeName name="java.io.File"/>
 <fullyQualifiedTypeName name="com.mydomain.ButtonListener"/>
@@ -14,11 +13,14 @@
 <fullyQualifiedTypeName name="lejos.nxt.I2CSensor"/>
 <fullyQualifiedTypeName name="lejos.nxt.Button"/>
 <fullyQualifiedTypeName name="lejos.nxt.SensorPort"/>
-<fullyQualifiedTypeName name="com.mydomain.Movement"/>
 <fullyQualifiedTypeName name="com.mydomain.Rotate"/>
-<fullyQualifiedTypeName name="java.util.ArrayList"/>
 <fullyQualifiedTypeName name="java.util.Arrays"/>
 <fullyQualifiedTypeName name="lejos.nxt.addon.OpticalDistanceSensor"/>
-<fullyQualifiedTypeName name="lejos.robotics.subsumption.Behavior"/>
 <fullyQualifiedTypeName name="lejos.util.Delay"/>
+<fullyQualifiedTypeName name="com.mydomain.DriveForward"/>
+<fullyQualifiedTypeName name="com.mydomain.Movement"/>
+<fullyQualifiedTypeName name="java.util.ArrayList"/>
+<fullyQualifiedTypeName name="lejos.robotics.subsumption.Arbitrator"/>
+<fullyQualifiedTypeName name="lejos.nxt.Motor"/>
+<fullyQualifiedTypeName name="lejos.robotics.subsumption.Behavior"/>
 </qualifiedTypeNameHistroy>

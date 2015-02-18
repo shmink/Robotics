@@ -2,15 +2,18 @@ package com.mydomain;
 import lejos.nxt.LightSensor;
 import lejos.nxt.Motor;
 import lejos.nxt.SensorPort;
+import lejos.robotics.navigation.DifferentialPilot;
 import lejos.robotics.subsumption.Behavior;
 
 public class keepOnPath implements Behavior {
 
-	Movement m = new Movement(100,200);
+	Movement m = new Movement(100,800);   //circle:100,800   curved circuit:300
 	Rotate r = new Rotate();
 	LightSensor lsLeft = new LightSensor(SensorPort.S4);
 	LightSensor lsRight = new LightSensor(SensorPort.S1);
 	private boolean  suppressed = false;
+	DifferentialPilot pilot = new DifferentialPilot(2.6f, 12.3f, Motor.A, Motor.B, false);//was 2.6f and 12.3f
+
 
 	@Override
 	public boolean takeControl() {
@@ -21,14 +24,16 @@ public class keepOnPath implements Behavior {
 	public void action() {
 		suppressed = false;
 		System.out.println("turning to path");
-			if(XOR(lsLeft.getLightValue() <= 40, lsRight.getLightValue() <= 40)){
-			}
-			if(lsLeft.getLightValue() <= 40){
-				m.moveLeft();
-			}
-			else if(lsRight.getLightValue() <= 40){
-				m.moveRight();
-			}
+		Rotate rotate = new Rotate();
+		if(lsLeft.getLightValue() <= 40)
+		{
+			pilot.steer(-200);
+		}
+		
+		if(lsRight.getLightValue() <= 40)
+		{
+			pilot.steer(200);
+		}
 	}
 
 	@Override

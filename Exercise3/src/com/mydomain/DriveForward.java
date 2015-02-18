@@ -4,7 +4,7 @@ import lejos.robotics.subsumption.*;
 
 public class DriveForward implements Behavior {
 
-	Movement m = new Movement(100,200);
+	Movement m = new Movement(100,500); //circle:100,s500   curved circuit:250
 	private boolean suppressed = false;
 	LightSensor lsLeft = new LightSensor(SensorPort.S4);
 	LightSensor lsRight = new LightSensor(SensorPort.S1);

@@ -12,7 +12,8 @@ public class Part1B {
 	static void run(){
 		Behavior b1 = new DriveForward();
 		Behavior b2 = new keepOnPath();
-		Behavior[] bArray = {b1,b2};
+		Behavior[] bArray = new Behavior[2];
+		bArray[0] = b1; bArray[1] = b2; 
 		Arbitrator arby = new Arbitrator(bArray);
 		arby.start();
 	}
