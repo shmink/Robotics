@@ -8,11 +8,8 @@
 <fullyQualifiedTypeName name="lejos.nxt.comm.RConsole"/>
 <fullyQualifiedTypeName name="lejos.nxt.UltrasonicSensor"/>
 <fullyQualifiedTypeName name="lejos.nxt.TouchSensor"/>
-<fullyQualifiedTypeName name="lejos.nxt.LightSensor"/>
 <fullyQualifiedTypeName name="lejos.nxt.LCD"/>
 <fullyQualifiedTypeName name="lejos.nxt.I2CSensor"/>
-<fullyQualifiedTypeName name="lejos.nxt.Button"/>
-<fullyQualifiedTypeName name="lejos.nxt.SensorPort"/>
 <fullyQualifiedTypeName name="com.mydomain.Rotate"/>
 <fullyQualifiedTypeName name="java.util.Arrays"/>
 <fullyQualifiedTypeName name="lejos.nxt.addon.OpticalDistanceSensor"/>
@@ -21,6 +18,10 @@
 <fullyQualifiedTypeName name="com.mydomain.Movement"/>
 <fullyQualifiedTypeName name="java.util.ArrayList"/>
 <fullyQualifiedTypeName name="lejos.robotics.subsumption.Arbitrator"/>
-<fullyQualifiedTypeName name="lejos.nxt.Motor"/>
 <fullyQualifiedTypeName name="lejos.robotics.subsumption.Behavior"/>
+<fullyQualifiedTypeName name="lejos.nxt.addon.NXTCam"/>
+<fullyQualifiedTypeName name="lejos.nxt.LightSensor"/>
+<fullyQualifiedTypeName name="lejos.nxt.Motor"/>
+<fullyQualifiedTypeName name="lejos.nxt.SensorPort"/>
+<fullyQualifiedTypeName name="lejos.nxt.Button"/>
 </qualifiedTypeNameHistroy>

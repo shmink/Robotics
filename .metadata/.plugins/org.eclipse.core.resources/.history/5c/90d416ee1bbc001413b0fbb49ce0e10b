@@ -1,0 +1,68 @@
+package com.mydomain;
+
+import lejos.nxt.Button;
+import lejos.nxt.LightSensor;
+import lejos.nxt.Motor;
+import lejos.nxt.SensorPort;
+
+public class LightChecker {
+	
+	LightSensor lsLeft;
+	LightSensor lsRight;
+	
+	int high = 0;
+	int low = 100;
+	
+	Rotate r = new Rotate();
+	
+	public static void main(String[] args)
+	{
+		Button.waitForAnyPress();
+		
+		LightChecker l = new LightChecker(SensorPort.S1, SensorPort.S4);
+		
+		l.checkLightHiLow();
+	}
+	
+	public LightChecker(SensorPort left, SensorPort right)
+	{
+		this.lsLeft = new LightSensor(left);
+		this.lsRight = new LightSensor(right);
+	}
+	
+	public void checkLightHiLow()
+	{
+		
+		//spin around
+		//int high
+		//int low
+		
+		//check highest and lowest
+		
+		//if there's a value lower than low, set it
+		//if there's a value higher than high, set it
+		
+		r.rotateRight(360);
+		
+		while( Motor.A.isMoving() || Motor.B.isMoving() )
+		{
+			if(lsLeft.getLightValue() > low)
+			{
+				low = lsLeft.getLightValue();
+			}
+			if(lsLeft.getLightValue() < high)
+			{
+				high = lsLeft.getLightValue();
+			}
+		}
+		
+		System.out.println("The high is: "+ high);
+		System.out.println("The low is: "+ low);
+
+		Button.waitForAnyPress();
+		//while spinning
+		//
+				
+	}
+
+}

@@ -1,9 +1,0 @@
-package com.mydomain;
-import lejos.robotics.subsumption.*;
-import lejos.nxt.Button;
-import lejos.nxt.LightSensor;
-import lejos.nxt.SensorPort;
-
-public class Part1 {
-
-}

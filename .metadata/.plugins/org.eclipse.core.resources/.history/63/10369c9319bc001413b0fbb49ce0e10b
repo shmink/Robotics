@@ -1,0 +1,38 @@
+package com.mydomain;
+
+import lejos.nxt.LightSensor;
+
+public class lightHiLowChecker {
+	
+	LightSensor lsLeft;
+	LightSensor lsRight;
+	
+	Rotate r = new Rotate();
+	
+	public lightHiLowChecker(LightSensor lsLeftPort, LightSensor lsRightPort)
+	{
+		this.lsLeft = lsLeftPort;
+		this.lsRight = lsRightPort;
+	}
+	
+	public void checkLightHiLow()
+	{
+		int high = 100;
+		int low;
+		//spin around
+		//int high
+		//int low
+		
+		//check highest and lowest
+		
+		//if there's a value lower than low, set it
+		//if there's a value higher than high, set it
+		
+		r.rotateRight(360);
+		
+		//while spinning
+		//
+				
+	}
+
+}
