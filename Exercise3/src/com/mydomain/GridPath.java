@@ -3,6 +3,7 @@ package com.mydomain;
 import lejos.nxt.LightSensor;
 import lejos.nxt.Motor;
 import lejos.nxt.SensorPort;
+import lejos.robotics.navigation.DifferentialPilot;
 import lejos.robotics.subsumption.Behavior;
 
 public class GridPath implements Behavior{
@@ -16,10 +17,12 @@ public class GridPath implements Behavior{
 	LightSensor lsLeft = new LightSensor(SensorPort.S4);
 	LightSensor lsRight = new LightSensor(SensorPort.S1);
 
-	public boolean takeControl() {
-		return lsRight.getLightValue()>40 && lsLeft.getLightValue()>40;
-	}
+	boolean oneTime = true;
 	
+	public boolean takeControl() {
+		return oneTime;
+	}
+
 	public GridPath(int currentX, int currentY, int endPositionX, int endPositionY)
 	{
 		this.cX = currentX;
@@ -30,7 +33,7 @@ public class GridPath implements Behavior{
 		horizontalDistance = eX - cX;//simply works out how far it needs to go horizontally
 		verticalDistance = eY - cY;  //does the same but vertically
 	}
-
+	
 	public void action() {
 		suppressed = false;
 
@@ -92,7 +95,7 @@ public class GridPath implements Behavior{
 				nY = true;
 			}
 			countTheJunctions(verticalDistance);
-			
+
 		}
 		while(Motor.A.isMoving() && Motor.B.isMoving())
 			Thread.yield();
@@ -100,18 +103,49 @@ public class GridPath implements Behavior{
 
 	private void countTheJunctions(int junctions)
 	{
-		LightSensor lsLeft = new LightSensor(SensorPort.S4);
-		LightSensor lsRight = new LightSensor(SensorPort.S1);
-		Movement move = new Movement(100,200);
+		Movement move = new Movement(100,300);
+		Rotate rotate = new Rotate();
+		
 		for (int i = 0; i < junctions;) 
-		{
+		{				
 			move.moveForward();
-			System.out.println("count the junctions " + i); 		
-			if(lsLeft.getLightValue() <= 40 && lsRight.getLightValue() <= 40){ //increments the for loop as it goes over a junction
+
+			if( lsLeft.getLightValue() <= Part2.LIGHTVAL && !(lsRight.getLightValue() <= Part2.LIGHTVAL) )
+			{
+				while(lsLeft.getLightValue() <= Part2.LIGHTVAL && !(lsRight.getLightValue() <= Part2.LIGHTVAL) )
+				{
+					move.stop();
+					rotate.rotateLeft(2);
+					if(lsLeft.getLightValue() > Part2.LIGHTVAL)
+					{
+						break;
+					}
+				}
+				//RotateUntilClear
+			}
+			else if( lsRight.getLightValue() <= Part2.LIGHTVAL && !(lsLeft.getLightValue() <= Part2.LIGHTVAL) )
+			{
+				while(lsRight.getLightValue() <= Part2.LIGHTVAL && !(lsLeft.getLightValue() <= Part2.LIGHTVAL) )
+				{
+					move.stop();
+					rotate.rotateRight(2);
+					if(lsRight.getLightValue() > Part2.LIGHTVAL)
+					{
+						break;
+					}
+				}
+				//RotateUntilClear
+			}
+			
+			if(lsLeft.getLightValue() <= Part2.LIGHTVAL && lsRight.getLightValue() <= Part2.LIGHTVAL)
+			{ //increments the for loop as it goes over a junction
 				move.travelForward(2);
 				i++;
+				System.out.println("Incrementation: "+i);
 			}
+			//botCount++;
 		}
+		oneTime = false;
 	}
 
 	@Override

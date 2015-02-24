@@ -1,0 +1,103 @@
+package com.mydomain;
+
+import lejos.nxt.SensorPort;
+import lejos.nxt.addon.NXTCam;
+import lejos.util.Delay;
+/*
+public class Part3
+{
+	public static void main(String []firetingz){
+		trackBlueBall();
+	}
+	
+	public static void trackBlueBall()
+	{
+		NXTCam cam = new NXTCam(SensorPort.S3);
+		cam.enableTracking(true);
+		cam.setTrackingMode(NXTCam.COLOR);
+		cam.sortBy(NXTCam.SIZE);
+
+		while(true)
+		{
+			int numberOfObjects = cam.getNumberOfObjects();
+			System.out.println(numberOfObjects);
+			Delay.msDelay(200);
+			for(int i = 0; i < numberOfObjects; i++)
+			{
+				cam.getRectangle(i);
+			}
+		}
+	}
+}*/
+
+
+
+import java.awt.Rectangle;
+
+import javax.microedition.lcdui.Graphics;
+
+import lejos.nxt.Button;
+import lejos.nxt.LCD;
+import lejos.nxt.SensorPort;
+
+/**
+ * Class to display the rectangles that the camera picks up on the NXT screen
+ * @author wayneage
+ *
+ */
+public class Part3
+{
+   
+   // NXT Display is 100 x 64
+   // Camera view is 176 x 144
+   
+   private static int INTERVAL=200;
+   private static int CAM_WIDTH=176;
+   private static int CAM_HEIGHT=144;
+   
+   private static int xscale(int x) 
+   {
+      return Math.round((x/(float)CAM_WIDTH)*LCD.SCREEN_WIDTH);
+   }
+
+
+   private static int yscale(int y) 
+   {
+      return  Math.round((y/(float)CAM_HEIGHT)*LCD.SCREEN_HEIGHT);
+   }
+   
+   public static void main(String [] args)
+   {
+      try{
+         NXTCam camera = new NXTCam(SensorPort.S1);
+         
+         camera.sendCommand('A');
+         camera.sendCommand('E');
+         int objectCount;
+         
+         Graphics g = new Graphics();
+         
+         while(!Button.ESCAPE.isPressed()){
+            g.clear();
+            
+            objectCount=camera.getNumberOfObjects();
+             if(objectCount>0 && objectCount<8){
+                for(int i =0; i<objectCount; i++){
+                   Rectangle rect = camera.getRectangle(i);
+
+                   g.drawRect(xscale(rect.x),yscale(rect.y),
+                            xscale(rect.width),yscale(rect.height));                   
+                   
+                }
+             }
+             Thread.sleep(INTERVAL);
+         }
+      }catch(Exception ex){
+         System.exit(0);
+      }
+   }
+}
+
+
+
+

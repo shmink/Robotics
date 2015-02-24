@@ -1,4 +1,5 @@
 package com.mydomain;
+import lejos.nxt.LCD;
 import lejos.nxt.LightSensor;
 import lejos.nxt.Motor;
 import lejos.nxt.SensorPort;
@@ -17,24 +18,25 @@ public class KeepOnGrid implements Behavior {
 
 	@Override
 	public boolean takeControl() {
-		System.out.println("keeping on grid");
-		return XOR(lsLeft.getLightValue() <= 40, lsRight.getLightValue() <= 40);
+		return XOR(lsLeft.getLightValue() <= Part2.LIGHTVAL, lsRight.getLightValue() <= Part2.LIGHTVAL);
 	}
-
+	
 	@Override
 	public void action() {
-		
+		LCD.drawString("control keepOnGrid", 0, 25);
+
 		suppressed = false;
-		System.out.println("turning to path");
 		Rotate rotate = new Rotate();
-		if(lsLeft.getLightValue() <= 40)
+		if(lsLeft.getLightValue() <= Part2.LIGHTVAL)
 		{
-			pilot.steer(-100);
+			LCD.drawString("should turn left", 0, 0);
+			pilot.rotate(-10);
 		}
 		
-		if(lsRight.getLightValue() <= 40)
+		if(lsRight.getLightValue() <= Part2.LIGHTVAL)
 		{
-			pilot.steer(100);
+			LCD.drawString("should turn right", 0, 0);
+			pilot.rotate(10);
 		}
 	}
 

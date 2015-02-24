@@ -1,0 +1,57 @@
+package com.mydomain;
+import lejos.nxt.LCD;
+import lejos.nxt.LightSensor;
+import lejos.nxt.Motor;
+import lejos.nxt.SensorPort;
+import lejos.robotics.navigation.DifferentialPilot;
+import lejos.robotics.subsumption.Behavior;
+
+public class KeepOnGrid implements Behavior {
+
+	Movement m = new Movement(50,100);   
+	Rotate r = new Rotate();
+	LightSensor lsLeft = new LightSensor(SensorPort.S4);
+	LightSensor lsRight = new LightSensor(SensorPort.S1);
+	private boolean  suppressed = false;
+	DifferentialPilot pilot = new DifferentialPilot(2.6f, 12.3f, Motor.A, Motor.B, false);//was 2.6f and 12.3f
+	
+
+	@Override
+	public boolean takeControl() {
+		//System.out.println("keeping on grid");
+		//System.out.println(lsLeft.getLightValue());
+		//System.out.println(lsRight.getLightValue());
+
+		return XOR(lsLeft.getLightValue() <= 30, lsRight.getLightValue() <= 30);
+	}
+	
+
+	@Override
+	public void action() {
+		
+		suppressed = false;
+		//System.out.println("turning to path");
+		Rotate rotate = new Rotate();
+		if(lsLeft.getLightValue() <= 50)
+		{
+			LCD.drawString("should turn left", 0, 0);
+			pilot.steer(-50);
+		}
+		
+		if(lsRight.getLightValue() <= 50)
+		{
+			LCD.drawString("should turn right", 0, 0);
+			pilot.steer(50);
+		}
+	}
+
+	@Override
+	public void suppress() {
+		this.suppressed=true;
+	}
+	
+	public boolean XOR(boolean x, boolean y){
+		return ((x||y) && (!(x&&y)));
+	}
+
+}
