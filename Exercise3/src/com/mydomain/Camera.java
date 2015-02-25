@@ -19,6 +19,7 @@ public class Camera {
 		String objects = "Objects: ";
 		int numObjects;
 		
+		camera.sendCommand('B'); // object tracking
 		camera.sendCommand('U'); // sort objects by colour
 		camera.sendCommand('E'); // start tracking
 	

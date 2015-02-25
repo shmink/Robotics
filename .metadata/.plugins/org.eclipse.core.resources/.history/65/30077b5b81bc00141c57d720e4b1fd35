@@ -25,7 +25,7 @@ public class Movement
 	 */
 	public Movement(int power, int speed)
 	{
-		  pilot = new DifferentialPilot(2.6f, 5.2f, Motor.A, Motor.B, false);//was 2.6f and 12.3f
+		  pilot = new DifferentialPilot(2.6f, 12.3f, Motor.A, Motor.B, false);//was 2.6f and 12.3f
 		  this.power = power;
 		  this.speed = speed;
 		  Motor.A.setSpeed(speed);
@@ -37,6 +37,8 @@ public class Movement
 	 */
 	public void moveForward()
 	{
+		Motor.A.setSpeed(speed);
+		Motor.B.setSpeed(speed);
 		Motor.A.forward();
 		Motor.B.forward();
 		System.out.println("moving forward");
@@ -62,12 +64,12 @@ public class Movement
 		pilot.travel(distance);
 	}
 	
-	public void moveLeft()
+	/*public void moveLeft()
 	{
 		Motor.A.setSpeed(speed*2);
 		Motor.B.setSpeed(speed);
 		System.out.println("moving left");
-	}
+	}*/
 	
 	public void moveRight()
 	{
@@ -293,6 +295,7 @@ public class Movement
 			//pilot.steer(-100);
 		}
 	}
+	
 	
 //	public void keepTheDistance(SensorPort s1, int distance)
 //	{

@@ -1,0 +1,53 @@
+package com.mydomain;
+
+import java.awt.Rectangle;
+
+import lejos.nxt.SensorPort;
+import lejos.nxt.addon.NXTCam;
+import lejos.util.Delay;
+
+public class Part3
+{	
+	static Rotate rotate = new Rotate();
+	static Movement move = new Movement(100,200);
+	
+	public static void main(String [] args){
+		trackBlueBall();
+	}
+	
+	public static void trackBlueBall()
+	{
+		NXTCam cam = new NXTCam(SensorPort.S3);
+		
+		
+		cam.setTrackingMode(NXTCam.COLOR);
+		cam.sortBy(NXTCam.SIZE);
+		cam.enableTracking(true);
+
+		while(true)
+		{
+			int numberOfObjects = cam.getNumberOfObjects();
+			//System.out.println(cam.getObjectColor(1));
+			//System.out.println(numberOfObjects);
+			Delay.msDelay(200);
+			for(int i = 0; i < numberOfObjects; i++)
+			{
+				System.out.println(cam.getRectangle(i));
+				
+				if(cam.getRectangle(i).width < 50)
+				{
+					move.moveForward(5);
+				}
+				if(cam.getRectangle(i).width >50)
+				{
+					move.reverse(5);
+				}
+			}
+		}
+		
+	}
+}
+
+
+
+

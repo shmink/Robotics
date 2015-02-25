@@ -41,7 +41,6 @@ public class Movement
 		Motor.B.setSpeed(speed);
 		Motor.A.forward();
 		Motor.B.forward();
-		System.out.println("moving forward");
 	}
 	
 	/*
@@ -53,7 +52,6 @@ public class Movement
 		Motor.B.setSpeed(speed);
 		Motor.A.forward();
 		Motor.B.forward();
-		System.out.println("moving forward");
 	}
 	
 	/**

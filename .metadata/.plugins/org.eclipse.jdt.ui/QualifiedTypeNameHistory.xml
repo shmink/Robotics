@@ -23,7 +23,7 @@
 <fullyQualifiedTypeName name="lejos.nxt.Motor"/>
 <fullyQualifiedTypeName name="lejos.nxt.SensorPort"/>
 <fullyQualifiedTypeName name="lejos.nxt.Button"/>
-<fullyQualifiedTypeName name="lejos.nxt.LCD"/>
 <fullyQualifiedTypeName name="com.mydomain.Part2"/>
 <fullyQualifiedTypeName name="com.mydomain.Part3"/>
+<fullyQualifiedTypeName name="lejos.nxt.LCD"/>
 </qualifiedTypeNameHistroy>
