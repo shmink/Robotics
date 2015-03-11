@@ -15,8 +15,8 @@ public class Part1Grid implements IGridMap{
 	float cellSize;
 	
 	
-	public Part1Grid(RPLineMap _lineMap, int _gridXSize,
-			int _gridYSize, float _xStart, float _yStart, float _cellSize){
+	public Part1Grid(int _gridXSize,
+			int _gridYSize, float _xStart, float _yStart, float _cellSize,RPLineMap _lineMap){
 		lineMap =_lineMap;
 		gridXSize = _gridXSize;
 		xStart = _xStart;
@@ -56,29 +56,22 @@ public class Part1Grid implements IGridMap{
 
 	@Override
 	public boolean isValidTransition(int _x1, int _y1, int _x2, int _y2) {
-		//convert x and y to line map points
+		///convert x and y to line map points
 		//draw direct line between start and finish points
 		//loop through all obstacles and check for intersection
 		float xStarting = _x1 * this.cellSize + xStart;
 		float yStarting = _y1 * this.cellSize + yStart;
 		float xEnd = _x2 * this.cellSize + xStart;
 		float yEnd = _y2 * this.cellSize + yStart;
+	
+		Line line = new Line(xStarting,yStarting,xEnd,yEnd);
 		
-		if(this.isValidGridPosition(_x1, _y1) && !this.isObstructed(_x1,_y1))  && // DOTH SAME FOR X2 AND Y2
-		
-		{
-			if(_x1 == _x2){
-				//FIND THE MIN VALUE BETWEEN THE TWO Y'S (THE FLOAT VERSIONS) AND START A LOOP FROM THERE UP UNTIL THE HIGHER VALUE
-				//WHILE LOOPING CHECK EACH POINT IF THE POINT IS INSIDE
-				//IF ALL ARE TRUE RETURN TRUE, ELSE RETURN FALSE
-			}
-			else if (_y1 == _y2){
-				
+		for (Line l : lineMap.getLines()){
+			if(lineMap.intersectsAt(line, l) != null){
+				return false;
 			}
 		}
-		
-		
-		return false;
+		return true;
 	}
 
 	@Override
