@@ -14,11 +14,11 @@ public class Part1Grid implements IGridMap{
 	float yStart;
 	float cellSize;
 	
-	
 	public Part1Grid(int _gridXSize,
 			int _gridYSize, float _xStart, float _yStart, float _cellSize,RPLineMap _lineMap){
 		lineMap =_lineMap;
 		gridXSize = _gridXSize;
+		gridYSize = _gridYSize;
 		xStart = _xStart;
 		yStart = _yStart;
 		cellSize=_cellSize;
@@ -37,21 +37,21 @@ public class Part1Grid implements IGridMap{
 
 	@Override
 	public boolean isValidGridPosition(int _x, int _y) {
-		return ((_x > 0 && _x< gridXSize)  &&  (_y >0 && _y<gridYSize));
+		return ( (_x > 0 && _x < gridXSize) 
+				&&
+				 (_y > 0 && _y < gridYSize) );
 	}
 
 	@Override
 	public boolean isObstructed(int _x, int _y) {
-		Point p =new Point(_x, _y);
-		return lineMap.inside(p);
+		Point p = this.getCoordinatesOfGridPosition(_x, _y);
+		return !lineMap.inside(p);
 	}
 
 	@Override
 	public Point getCoordinatesOfGridPosition(int _x, int _y) {
-		float x = (this.cellSize * _x)  +xStart;
-		float y = (this.cellSize * _y) + yStart;
-		Point p = new Point(x, y);
-		return p;
+		return new Point((this.xStart + _x * this.cellSize),
+							(this.yStart + _y * this.cellSize) );
 	}
 
 	@Override
@@ -75,10 +75,8 @@ public class Part1Grid implements IGridMap{
 	}
 
 	@Override
-	public float rangeToObstacleFromGridPosition(int _x, int _y, float _heading) {
-		Pose p = new Pose(_x,_y,_heading);
-		return lineMap.range(p);
-	}
-
+		public float rangeToObstacleFromGridPosition(int _x, int _y, float _heading) {
+			return this.lineMap.range(new Pose(this.xStart+_x*this.cellSize,this.yStart+_y*this.cellSize,_heading));
+		}
 	
 }

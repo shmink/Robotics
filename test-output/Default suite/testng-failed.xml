@@ -5,7 +5,7 @@
     <classes>
       <class name="rp.robotics.mapping.GridMapTest">
         <methods>
-          <include name="rangeToObstacleTest"/>
+          <include name="testMapTest"/>
         </methods>
       </class> <!-- rp.robotics.mapping.GridMapTest -->
     </classes>
