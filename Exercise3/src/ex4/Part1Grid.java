@@ -16,30 +16,29 @@ public class Part1Grid implements IGridMap{
 	
 	public Part1Grid(int _gridXSize,
 			int _gridYSize, float _xStart, float _yStart, float _cellSize,RPLineMap _lineMap){
-		lineMap =_lineMap;
 		gridXSize = _gridXSize;
 		gridYSize = _gridYSize;
 		xStart = _xStart;
 		yStart = _yStart;
 		cellSize=_cellSize;
-		
+		lineMap =_lineMap;
+
 	}
 	
 	@Override
 	public int getXSize() {
-		return gridXSize;
+		return this.gridXSize;
 	}
 
 	@Override
 	public int getYSize() {
-		return gridYSize;
+		return this.gridYSize;
 	}
 
 	@Override
 	public boolean isValidGridPosition(int _x, int _y) {
-		return ( (_x > 0 && _x < gridXSize) 
-				&&
-				 (_y > 0 && _y < gridYSize) );
+		return _x<this.gridXSize && _y<this.gridYSize && _x>=0 && _y>=0;
+
 	}
 
 	@Override
@@ -50,28 +49,53 @@ public class Part1Grid implements IGridMap{
 
 	@Override
 	public Point getCoordinatesOfGridPosition(int _x, int _y) {
-		return new Point((this.xStart + _x * this.cellSize),
-							(this.yStart + _y * this.cellSize) );
+		return new Point((this.xStart + (_x * this.cellSize)),
+							(this.yStart + (_y * this.cellSize)) );
 	}
 
 	@Override
 	public boolean isValidTransition(int _x1, int _y1, int _x2, int _y2) {
-		///convert x and y to line map points
-		//draw direct line between start and finish points
-		//loop through all obstacles and check for intersection
-		float xStarting = _x1 * this.cellSize + xStart;
-		float yStarting = _y1 * this.cellSize + yStart;
-		float xEnd = _x2 * this.cellSize + xStart;
-		float yEnd = _y2 * this.cellSize + yStart;
-	
-		Line line = new Line(xStarting,yStarting,xEnd,yEnd);
-		
-		for (Line l : lineMap.getLines()){
-			if(lineMap.intersectsAt(line, l) != null){
-				return false;
+		float xCoord1=this.xStart+_x1*this.cellSize;
+		float xCoord2=this.xStart+_x2*this.cellSize;
+		float yCoord1=this.yStart+_y1*this.cellSize;
+		float yCoord2=this.yStart+_y2*this.cellSize;
+
+		if(!this.isObstructed(_x1, _y1) && !this.isObstructed(_x2, _y2) && this.isValidGridPosition(_x1, _y1) && this.isValidGridPosition(_x2, _y2))
+		{
+			//System.out.println(_x1 + "" + _y1+ " is valid and not obstructed");
+			if(_x1==_x2)
+			{
+				//System.out.println(_x1 + "=" + _x2);
+				for(float j=Math.min(yCoord1, yCoord2);j<=Math.max(yCoord1, yCoord2);j++)
+				{
+					//System.out.println(j);
+					if(!this.lineMap.inside(new Point(xCoord1,j))){
+						//System.out.println("point " + new Point(xCoord1, j)+ "is not accessible");
+						return false;
+					}
+				}
+				//System.out.println("is accessible");
+				return true;
 			}
+			else if(_y1==_y2)
+			{
+				//System.out.println(_y1 + "=" +_y2);
+				{
+					for(float j=Math.min(xCoord1, xCoord2);j<=Math.max(xCoord1, xCoord2);j++)
+					{
+						//System.out.println(j);
+						if(!this.lineMap.inside(new Point(j,yCoord1))){
+							//System.out.println("point " + new Point(xCoord1, j)+ "is not accessible");
+							return false;
+						}
+					}
+				}
+				//System.out.println("is accessible");
+				return true;
+			}
+			else return true;
 		}
-		return true;
+		else return false;
 	}
 
 	@Override
