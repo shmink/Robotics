@@ -3,11 +3,12 @@
 <suite name="Failed suite [Default suite]">
   <test name="Default test(failed)">
     <classes>
-      <class name="rp.robotics.mapping.GridMapTest">
+      <class name="Search.TestSearch">
         <methods>
-          <include name="testMapTest"/>
+          <include name="beforeClass"/>
+          <include name="Testin"/>
         </methods>
-      </class> <!-- rp.robotics.mapping.GridMapTest -->
+      </class> <!-- Search.TestSearch -->
     </classes>
   </test> <!-- Default test(failed) -->
 </suite> <!-- Failed suite [Default suite] -->

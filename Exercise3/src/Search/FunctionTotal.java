@@ -15,10 +15,10 @@ public class FunctionTotal implements Function< Node<Coordinate>, Integer > {
 	 * @param start A starting point, is of type Node<Coordinate>
 	 * @param goal A goal point, is of type Node<Coordinate>
 	 */
-	public FunctionTotal(Graph nicksGraph, Node<Coordinate> start, Node<Coordinate> goal)
+	public FunctionTotal(Graph Part1Grid, Node<Coordinate> start, Node<Coordinate> goal)
 	{
 		this.manhDist = new Manhattan(goal);
-		this.gcost = new GCost(nicksGraph, start);
+		this.gcost = new GCost(Part1Grid, start);
 	}
 	
 	/*

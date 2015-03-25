@@ -1,66 +1,87 @@
 package Search;
 
+//import Coordinate;
+//import Node;
+
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.LinkedHashSet;
 import java.util.Map;
-import java.util.Set;
 
-import rp.robotics.mapping.IGridMap;
+import rp.robotics.mapping.MapUtils;
+import rp.robotics.mapping.RPLineMap;
 import util.SimpleSet;
 import ex4.Part1Grid;
 
-//We represent a graph as a set of nodes. 
-//This is a minimal class so that a graph can be created.
+//We represent Coordinate graph as Coordinate set of nodes. 
+//This is Coordinate minimal class so that Coordinate graph can be created.
 
 public class Graph {
 	
 	private Map<Node<Coordinate>, Maybe<Node<Coordinate>>> links;
 	private Map<Coordinate, Node<Coordinate>> gridNodes;
-	private IGridMap gridMap;   
+	private Part1Grid gridMap;   
 
 // Constructs the empty graph:
-public Graph(IGridMap grid) {
+public Graph(Part1Grid grid) {
 	
  // Choose any implementation of sets you please, but you need to
  // choose one.
- gridNodes = new HashMap<Coordinate, Node<Coordinate>>();
- links = new HashMap<Node<Coordinate>,Maybe<Node<Coordinate>>>();
+ gridNodes = new LinkedHashMap<Coordinate, Node<Coordinate>>();
+ links = new HashMap<Node<Coordinate>, Maybe<Node<Coordinate>>>();
  this.gridMap = grid;
  this.makeGraph();
 }
 
-private void makeGraph() {
-	int horDist = gridMap.getXSize(), verDist = gridMap.getYSize();
-	
-	for (int i = 0; i < horDist; i++) 
+//Convert grid to graph
+private void makeGraph()
+{
+	for(int i = 0; i < gridMap.getXSize(); i++)
 	{
-		for (int j = 0; j < verDist; j++) 
+		for(int j = 0; j < gridMap.getYSize(); j++)
 		{
-			Coordinate gridPos = new Coordinate(i,j);
-			Node<Coordinate> node = this.nodeWith(gridPos);
+				Coordinate c = new Coordinate(i,j);
+				Node<Coordinate> node = this.nodeWith(c);
 			
-			for (int k = -1; k <= 1; k++) 
+			//Up
+			if(gridMap.isValidTransition(i, j, i, j+1))
 			{
-				for (int l = -1; l <= 1; l++) 
-				{
-					if (Math.abs(k)+Math.abs(l)==1) 
-					{
-						int maybeX = i+k, maybeY = j+l;
-						
-						if(this.gridMap.isValidTransition(i, j, maybeX, maybeY))
-						{
-							Coordinate successor = new Coordinate(maybeX, maybeY);
-							Node<Coordinate> newNode = this.nodeWith(successor);
-							node.addSuccessor(newNode);
-						}
-					}
-				}	
-			}	
-		}	
+				//System.out.println(i + ", " + j + ", "+ i + ", " + (j+1));
+				//<Node<Coordinate>,Maybe<Node<Coordinate>>
+				//Node<Coordinate> coordinate = new Node<Coordinate>(i, j);
+				Node<Coordinate> child = this.nodeWith(new Coordinate(i, j+1));
+				node.addSuccessor(child);
+			}
+			//Down
+			if(gridMap.isValidTransition(i, j, i, j-1))
+			{
+				Node<Coordinate> child = this.nodeWith(new Coordinate(i, j-1));
+				node.addSuccessor(child);
+				
+			}
+			//Left
+			if(gridMap.isValidTransition(i, j, i-1, j))
+			{
+				
+				Node<Coordinate> child = this.nodeWith(new Coordinate(i-1, j));
+				node.addSuccessor(child);
+			}
+			//Right
+			if(gridMap.isValidTransition(i, j, i+1, j))
+			{
+				Node<Coordinate> child = this.nodeWith(new Coordinate(i+1, j));
+				node.addSuccessor(child);
+			}
+		}
 	}
+	//for each gridmap coordinate that isn't obstructed
+	//add new map entry, coordinate and node coordinate
+	//for each of those nodes, look up, right, bottom ,left
+	//if isValidTransition, add it as Coordinate successors
+	//USE nodeWith
 }
+
 
 public Map<Node<Coordinate>, Maybe<Node<Coordinate>>> getlinks()
 {
@@ -70,23 +91,22 @@ public Map<Node<Coordinate>, Maybe<Node<Coordinate>>> getlinks()
 // Get method:
 public Map<Coordinate, Node<Coordinate>> nodes() 
 {
- return gridNodes;
+ return this.gridNodes;
 }
 
-// Finds or else creates a node with a given contents c:
+// Finds or else creates Coordinate node with Coordinate given contents c:
 public Node<Coordinate> nodeWith(Coordinate c) 
 {
-	
- Node<Coordinate> point;
- if(this.gridNodes.containsKey(c))
-	 point = gridNodes.get(c);
- else
- {
-	 point = new Node<Coordinate>(c);
-	 gridNodes.put(c, point);
- }
+	Node<Coordinate> point;
+	if(this.gridNodes.containsKey(c))
+		point = gridNodes.get(c);
+	else
+	{
+		point = new Node<Coordinate>(c);
+		gridNodes.put(c, point);
+	}
  
- return point;
+	return point;
 }
 
 // Builds sample graph for testing:
@@ -209,14 +229,14 @@ Graph<Coordinate> nicksGraph = new Graph<Coordinate>();
  System.out.println("Nodes:");
  
  /*BFS*/
-// System.out.println(nicksGraph.findNode(nicksGraph.nodeWith(new Coordinate(4,0)), (a->a.getX()==4 && a.getY()==1), new Queue<Node<Coordinate>>()));
+// System.out.println(nicksGraph.findNode(nicksGraph.nodeWith(new Coordinate(4,0)), (Coordinate->Coordinate.getX()==4 && Coordinate.getY()==1), new Queue<Node<Coordinate>>()));
  /*DFS*/
- //System.out.println(nicksGraph.findNode(nicksGraph.nodeWith(new Coordinate(4,0)), (a->a.getX()==4 && a.getY()==1), new Stack<Node<Coordinate>>()));
+ //System.out.println(nicksGraph.findNode(nicksGraph.nodeWith(new Coordinate(4,0)), (Coordinate->Coordinate.getX()==4 && Coordinate.getY()==1), new Stack<Node<Coordinate>>()));
  /*
  System.out.println("Paths:");
- //A* Path
+ //Coordinate* Path
  /*DFS Path
- System.out.println(nicksGraph.findPath(nicksGraph.nodeWith(new Coordinate(0,0)), (a->a.getX()==3 && a.getY()==1), new Stack<Node<Coordinate>>()));*/
+ System.out.println(nicksGraph.findPath(nicksGraph.nodeWith(new Coordinate(0,0)), (Coordinate->Coordinate.getX()==3 && Coordinate.getY()==1), new Stack<Node<Coordinate>>()));*/
 //}
 
 //Generalization
@@ -260,7 +280,7 @@ public Maybe<IList<Node<Coordinate>>> findPath(Node<Coordinate> nodeStart, Predi
 	  frontier.insertItem(nodeStart);
 	  
 	  //Hash Map to store our path
-	  this.links = new HashMap<Node<Coordinate>,Maybe<Node<Coordinate>>>();
+	  this.links = new LinkedHashMap< Node<Coordinate>, Maybe<Node<Coordinate>> >();
 	  
 	  while(!frontier.isEmpty())
 	  {
@@ -319,7 +339,23 @@ public Maybe<IList<Node<Coordinate>>> reconstructPath(Map<Node<Coordinate>, Mayb
 		return new Just<IList<Node<Coordinate>>>(path);
 }
 
+public static void main(String [] args)
+{
+	RPLineMap map = MapUtils.create2015Map1();
+	Part1Grid grid = new Part1Grid(12, 8, 15, 15, 30, map);
+	Graph graph = new Graph(grid);
+	
+	  for (Map.Entry<Coordinate,Node<Coordinate>> node : graph.nodes().entrySet()) {
+	      System.out.print(node.getValue() + ": ");
+	      for(Node<Coordinate> s : node.getValue().successors()) {
+	        System.out.print(s + ", ");
+	      }
+	      System.out.println();
+	    }
+}
+
 public Map<Node<Coordinate>, Maybe<Node<Coordinate>>> getPathMap() {
-	return this.links;
+	// TODO Auto-generated method stub
+	return links;
 }
 }

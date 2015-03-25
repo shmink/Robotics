@@ -5,7 +5,7 @@ package Search;
 public class Coordinate {
 public int x,y;
 
-Coordinate(int x, int y) {
+public Coordinate(int x, int y) {
   this.x = x;
   this.y = y;
 }
@@ -23,6 +23,11 @@ public boolean equals(Object o) {
 public int getX()
 {
 	  return x;
+}
+
+public int hashCode()
+{
+	return this.getX() + this.getY();
 }
 
 /**
