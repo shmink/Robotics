@@ -5,8 +5,6 @@ package Search;
 
 import java.util.Collection;
 import java.util.HashMap;
-import java.util.LinkedHashMap;
-import java.util.LinkedHashSet;
 import java.util.Map;
 
 import rp.robotics.mapping.MapUtils;
@@ -28,7 +26,7 @@ public Graph(Part1Grid grid) {
 	
  // Choose any implementation of sets you please, but you need to
  // choose one.
- gridNodes = new LinkedHashMap<Coordinate, Node<Coordinate>>();
+ gridNodes = new HashMap<Coordinate, Node<Coordinate>>();
  links = new HashMap<Node<Coordinate>, Maybe<Node<Coordinate>>>();
  this.gridMap = grid;
  this.makeGraph();
@@ -95,15 +93,15 @@ public Map<Coordinate, Node<Coordinate>> nodes()
 }
 
 // Finds or else creates Coordinate node with Coordinate given contents c:
-public Node<Coordinate> nodeWith(Coordinate c) 
+public Node<Coordinate> nodeWith(Coordinate coordinate) 
 {
 	Node<Coordinate> point;
-	if(this.gridNodes.containsKey(c))
-		point = gridNodes.get(c);
+	if(this.gridNodes.containsKey(coordinate))
+		point = gridNodes.get(coordinate);
 	else
 	{
-		point = new Node<Coordinate>(c);
-		gridNodes.put(c, point);
+		point = new Node<Coordinate>(coordinate);
+		gridNodes.put(coordinate, point);
 	}
  
 	return point;
@@ -280,7 +278,7 @@ public Maybe<IList<Node<Coordinate>>> findPath(Node<Coordinate> nodeStart, Predi
 	  frontier.insertItem(nodeStart);
 	  
 	  //Hash Map to store our path
-	  this.links = new LinkedHashMap< Node<Coordinate>, Maybe<Node<Coordinate>> >();
+	  this.links = new HashMap< Node<Coordinate>, Maybe<Node<Coordinate>> >();
 	  
 	  while(!frontier.isEmpty())
 	  {
@@ -314,9 +312,9 @@ public Maybe<IList<Node<Coordinate>>> findPath(Node<Coordinate> nodeStart, Predi
 			  {
 					successors = successors.append(i);
 			  }
-			  links.put(toExpand, toExpand.getParent());
-			  frontier.insertList(successors);			  
-
+			  
+			  links.put(toExpand, toExpand.getParent());		  
+			  frontier.insertList(successors);	
 		  }
 	  }
 	  return new Nothing<IList<Node<Coordinate>>>();
@@ -344,7 +342,7 @@ public static void main(String [] args)
 	RPLineMap map = MapUtils.create2015Map1();
 	Part1Grid grid = new Part1Grid(12, 8, 15, 15, 30, map);
 	Graph graph = new Graph(grid);
-	
+	FunctionTotal funcTotal = new FunctionTotal(graph, graph.nodeWith(new Coordinate(0,0)), graph.nodeWith(new Coordinate(9,6)));
 	  for (Map.Entry<Coordinate,Node<Coordinate>> node : graph.nodes().entrySet()) {
 	      System.out.print(node.getValue() + ": ");
 	      for(Node<Coordinate> s : node.getValue().successors()) {
@@ -352,6 +350,11 @@ public static void main(String [] args)
 	      }
 	      System.out.println();
 	    }
+	 // graph.findPath(graph.nodeWith(new Coordinate(0,0)), graph.nodeWith(new Coordinate(9,6)), new PriorityQueue<Coordinate,Integer>(funcTotal));
+	  IList<Node<Coordinate>> test = graph.findPath(graph.nodeWith(new Coordinate(0,0)), (a->a.getX()==9 && a.getY()==6),
+				 new PriorityQueue<Node<Coordinate>, Integer>(funcTotal)).fromMaybe();
+	  
+	  System.out.println(test);
 }
 
 public Map<Node<Coordinate>, Maybe<Node<Coordinate>>> getPathMap() {

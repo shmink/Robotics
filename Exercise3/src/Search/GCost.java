@@ -12,7 +12,7 @@ public class GCost implements Function<Node<Coordinate>, Integer>{
 	
 	public GCost(Graph Part1Graph, Node<Coordinate> start)
 	{
-		this.Part1Grid = Part1Grid;
+		this.Part1Grid = Part1Graph;
 		this.start = start;
 	}
 

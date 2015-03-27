@@ -25,22 +25,17 @@ public class SearchTestFam
 	private IList<Coordinate> startNodes;
 	private IList<Coordinate> goalNodes;
 	
-	public static void main(String[] args)
-	{
-		SearchTestFam stfu = new SearchTestFam();
-		
-		stfu.beforeClass();
-	}
 	
+	@BeforeClass
 	public void beforeClass()
 	{
 		RPLineMap lineMap = MapUtils.create2015Map1();
-		grid = (Part1Grid)GridMapViewer.createGridMap(lineMap, 10, 7, 14, 31, 30);
+		grid = (Part1Grid)GridMapViewer.createGridMap(lineMap, 12, 8, 15, 15, 30);
 		this.graph = new Search.Graph(grid);
 		//Start
-		//this.startNodes = new Nil<Coordinate>();
+		this.startNodes = new Nil<Coordinate>();
 		this.startNodes = new Search.Cons<Coordinate>(new Coordinate(0,0), this.startNodes);
-	/*	this.startNodes = new Search.Cons<Coordinate>(new Coordinate(1,0), this.startNodes);
+		this.startNodes = new Search.Cons<Coordinate>(new Coordinate(1,0), this.startNodes);
 		this.startNodes = new Search.Cons<Coordinate>(new Coordinate(2,0), this.startNodes);
 		this.startNodes = new Search.Cons<Coordinate>(new Coordinate(3,0), this.startNodes);
 		this.startNodes = new Search.Cons<Coordinate>(new Coordinate(1,2), this.startNodes);
@@ -48,12 +43,11 @@ public class SearchTestFam
 		this.startNodes = new Search.Cons<Coordinate>(new Coordinate(2,5), this.startNodes);
 		this.startNodes = new Search.Cons<Coordinate>(new Coordinate(2,7), this.startNodes);
 		this.startNodes = new Search.Cons<Coordinate>(new Coordinate(3,4), this.startNodes);
-		this.startNodes = new Search.Cons<Coordinate>(new Coordinate(4,1), this.startNodes);	*/
-		
+		this.startNodes = new Search.Cons<Coordinate>(new Coordinate(4,1), this.startNodes);
 		///Goal
-		//this.goalNodes = new Nil<Coordinate>();
+		this.goalNodes = new Nil<Coordinate>();
 		this.goalNodes = new Search.Cons<Coordinate>(new Coordinate(3,0), this.goalNodes);
-	/*	this.goalNodes = new Search.Cons<Coordinate>(new Coordinate(3,2), this.goalNodes);
+		this.goalNodes = new Search.Cons<Coordinate>(new Coordinate(3,2), this.goalNodes);
 		this.goalNodes = new Search.Cons<Coordinate>(new Coordinate(3,3), this.goalNodes);
 		this.goalNodes = new Search.Cons<Coordinate>(new Coordinate(3,4), this.goalNodes);
 		this.goalNodes = new Search.Cons<Coordinate>(new Coordinate(3,5), this.goalNodes);
@@ -61,16 +55,18 @@ public class SearchTestFam
 		this.goalNodes = new Search.Cons<Coordinate>(new Coordinate(4,2), this.goalNodes);
 		this.goalNodes = new Search.Cons<Coordinate>(new Coordinate(5,2), this.goalNodes);
 		this.goalNodes = new Search.Cons<Coordinate>(new Coordinate(6,2), this.goalNodes);
-		this.goalNodes = new Search.Cons<Coordinate>(new Coordinate(7,2), this.goalNodes);*/
-	
-	
-		//for(int j = 0; j < startNodes.size(); j ++)
-		//{
+		this.goalNodes = new Search.Cons<Coordinate>(new Coordinate(7,2), this.goalNodes);
+	}
+		@Test
+		public void UrMum()
+		{
+		for(int j = 0; j < startNodes.size(); j ++)
+		{
 			 FunctionTotal funcTotal = new FunctionTotal(graph, graph.nodeWith(this.startNodes.head()),
 					 graph.nodeWith(this.goalNodes.head()));
 			 
-			/* Node<Coordinate> startNode = graph.nodeWith(this.startNodes.head());
-			 Node<Coordinate> goalNode = graph.nodeWith(this.goalNodes.head());
+			Node<Coordinate> startNode = graph.nodeWith(this.startNodes.head());
+			Node<Coordinate> goalNode = graph.nodeWith(this.goalNodes.head());
 	
 			IList<Node<Coordinate>> path =  graph.findPath(graph.nodeWith(this.startNodes.head()), (a->a.getX()==this.goalNodes.head().getX() && a.getY()==this.goalNodes.head().getY()),
 					 new PriorityQueue<Node<Coordinate>, Integer>(funcTotal)).fromMaybe();
@@ -88,16 +84,7 @@ public class SearchTestFam
 			
 			this.startNodes = startNodes.tail();
 			this.goalNodes = goalNodes.tail();
-			*/
-			 
-			System.out.println(graph.findPath(graph.nodeWith(new Coordinate(0,0)),
-					(a->a.getX()==1 && a.getY()==0), new Stack<Node<Coordinate>>()));
-
-	//	}
-		
-		 //graph.findPath(graph.nodeWith(new Coordinate(0,0)), (a->a.getX()==3 && a.getY()==1), new Stack<Node<Coordinate>>()));
-
-		 
-		 //System.out.println(path);
+		}
 	}
-}	
+	}
+
