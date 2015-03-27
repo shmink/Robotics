@@ -23,13 +23,8 @@ public class TestSearch
 	private IList<Coordinate> startNode;
 	private IList<Coordinate> goalNode;
 	
-	public static void main(String[] args)
-	{
-		TestSearch ts = new TestSearch();
-		ts.beforeClass();
-		//ts.testMethod();
-	}
 	
+	@BeforeClass
 	public void beforeClass()
 	{
 		RPLineMap lineMap = MapUtils.create2015Map1();
@@ -39,7 +34,7 @@ public class TestSearch
 		//Start
 		this.startNode = new Nil<Coordinate>();
 		this.startNode = new Search.Cons<Coordinate>(new Coordinate(0,0), this.startNode);
-		/*this.startNode = new Search.Cons<Coordinate>(new Coordinate(1,0), this.startNode);
+		this.startNode = new Search.Cons<Coordinate>(new Coordinate(1,0), this.startNode);
 		this.startNode = new Search.Cons<Coordinate>(new Coordinate(2,0), this.startNode);
 		this.startNode = new Search.Cons<Coordinate>(new Coordinate(3,0), this.startNode);
 		this.startNode = new Search.Cons<Coordinate>(new Coordinate(1,2), this.startNode);
@@ -47,12 +42,12 @@ public class TestSearch
 		this.startNode = new Search.Cons<Coordinate>(new Coordinate(2,5), this.startNode);
 		this.startNode = new Search.Cons<Coordinate>(new Coordinate(2,7), this.startNode);
 		this.startNode = new Search.Cons<Coordinate>(new Coordinate(3,4), this.startNode);
-		this.startNode = new Search.Cons<Coordinate>(new Coordinate(4,1), this.startNode);	*/	
+		this.startNode = new Search.Cons<Coordinate>(new Coordinate(4,1), this.startNode);
 		
 		///Goal
 		this.goalNode = new Nil<Coordinate>();
 		this.goalNode = new Search.Cons<Coordinate>(new Coordinate(3,1), this.goalNode);
-		/*this.goalNode = new Search.Cons<Coordinate>(new Coordinate(3,2), this.goalNode);
+		this.goalNode = new Search.Cons<Coordinate>(new Coordinate(3,2), this.goalNode);
 		this.goalNode = new Search.Cons<Coordinate>(new Coordinate(3,3), this.goalNode);
 		this.goalNode = new Search.Cons<Coordinate>(new Coordinate(3,4), this.goalNode);
 		this.goalNode = new Search.Cons<Coordinate>(new Coordinate(3,5), this.goalNode);
@@ -60,7 +55,7 @@ public class TestSearch
 		this.goalNode = new Search.Cons<Coordinate>(new Coordinate(4,2), this.goalNode);
 		this.goalNode = new Search.Cons<Coordinate>(new Coordinate(5,2), this.goalNode);
 		this.goalNode = new Search.Cons<Coordinate>(new Coordinate(6,2), this.goalNode);
-		this.goalNode = new Search.Cons<Coordinate>(new Coordinate(7,2), this.goalNode);*/
+		this.goalNode = new Search.Cons<Coordinate>(new Coordinate(7,2), this.goalNode);
 	
 		
 		 FunctionTotal funcTotal = new FunctionTotal(graph, graph.nodeWith(new Coordinate(0,0)),
@@ -69,9 +64,9 @@ public class TestSearch
 		 Node<Coordinate> startNode = graph.nodeWith(this.startNode.head());
 		 Node<Coordinate> goalNode = graph.nodeWith(this.goalNode.head());
 
-		 Maybe<IList<Node<Coordinate>>> path =  graph.findPath(graph.nodeWith(new Coordinate(0,0)), (a->a.getX()==3 && a.getY()==1),
+		/* Maybe<IList<Node<Coordinate>>> path =  graph.findPath(graph.nodeWith(new Coordinate(0,0)), (a->a.getX()==3 && a.getY()==1),
 				 new PriorityQueue<Node<Coordinate>, Integer>(funcTotal));
 		 
-		 System.out.println(path);
+		 System.out.println(path);*/
 	}
 }

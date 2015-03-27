@@ -272,7 +272,7 @@ public Maybe<Node<Coordinate>> findNode(Node<Coordinate> nodeStart, Predicate<Co
 }
 
 //Generalisation
-public Maybe<IList<Node<Coordinate>>> findPath(Node<Coordinate> nodeStart, Predicate<Coordinate> pred, DataStructure<Node<Coordinate>> frontier)
+public Maybe<IList<Node<Coordinate>>> findPath(Node<Coordinate> nodeStart, Predicate<Coordinate> predicate, DataStructure<Node<Coordinate>> frontier)
 {
 	  Collection<Node<Coordinate>> visited = new SimpleSet<Node<Coordinate>>();
 	  frontier.insertItem(nodeStart);
@@ -286,7 +286,7 @@ public Maybe<IList<Node<Coordinate>>> findPath(Node<Coordinate> nodeStart, Predi
 		  {
 			  frontier.removeHead();
 		  }
-		  else if(pred.holds(frontier.getHead().fromMaybe().contents()))
+		  else if(predicate.holds(frontier.getHead().fromMaybe().contents()))
 		  {
 			  Node<Coordinate> goal = frontier.getHead().fromMaybe();
 			  links.put(goal,goal.getParent());
